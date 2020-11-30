@@ -64,4 +64,13 @@ class Pelicula {
     voteCount = json['vote_count'];
     originalLanguage = json['original_languaje'];
   }
+
+  getPosterImg() {
+    if (this.posterPath == null) {
+      return 'https://sca.frogbikes.com/secure/img/no_image_available.jpeg';
+    } 
+    else {
+      return 'https://image.tmdb.org/t/p/w500/$posterPath';
+    }
+  }
 }
