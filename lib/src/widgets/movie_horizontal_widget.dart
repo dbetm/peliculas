@@ -23,11 +23,42 @@ class MovieHorizontal extends StatelessWidget {
 
     return Container(
       height: _screenSize.height * 0.2,
-      child: PageView(
-        children: _tarjetas(context),
+      /* La diferencia entre PageView y PageView.builder, es que el primero
+      * renderiza todos los elementos a la vez y puede generar un fallo de
+      * memoria. Con PageView.builder se renderizan según se necesitan (bajo 
+      * demanda).
+      */
+      child: PageView.builder(
+        // children: _tarjetas(context),
+        itemBuilder: (context, i) {
+          return _tarjeta(context, peliculas[i]);
+        },
+        itemCount: this.peliculas.length,
         pageSnapping: false,
         controller: this._pageController,
       ),
+    );
+  }
+
+  Widget _tarjeta(BuildContext context, Pelicula pelicula) {
+    return Container(
+      margin: EdgeInsets.only(right: 10.0),
+      child: Column(
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: FadeInImage(
+              placeholder: AssetImage('assets/img/no-image.jpg'),
+              image: NetworkImage(pelicula.getPosterImg()),
+              fit: BoxFit.cover,
+              height: 110.0,
+            ),
+          ),
+          Text(pelicula.title,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.caption)
+        ],
+      )
     );
   }
 

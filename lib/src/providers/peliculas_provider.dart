@@ -10,15 +10,20 @@ class PeliculasProvider {
   String _url = 'api.themoviedb.org';
   String _languaje = 'es-ES';
   int _popularesPage = 0;
+  bool _cargando = false;
+
   List<Pelicula> _populares = new List();
   // Tubería
-  final _popularesStreamController = new StreamController<List<Pelicula>>.broadcast();
+  final _popularesStreamController =
+      new StreamController<List<Pelicula>>.broadcast();
 
   // Insertar data al stream
-  Function(List<Pelicula>) get popularesSink => _popularesStreamController.sink.add;
+  Function(List<Pelicula>) get popularesSink =>
+      _popularesStreamController.sink.add;
 
   // Recuperar data del stream
-  Stream<List<Pelicula>> get popularesStream => _popularesStreamController.stream;
+  Stream<List<Pelicula>> get popularesStream =>
+      _popularesStreamController.stream;
 
   void disposeStream() {
     this._popularesStreamController?.close();
@@ -44,6 +49,9 @@ class PeliculasProvider {
   }
 
   Future<List<Pelicula>> getPopulares() async {
+    if (this._cargando) return [];
+
+    this._cargando = true;
     _popularesPage++;
 
     final url = Uri.https(_url, '3/movie/popular', {
@@ -57,6 +65,7 @@ class PeliculasProvider {
     this._populares.addAll(respuestas);
     popularesSink(this._populares);
 
+    this._cargando = false;
 
     return respuestas;
   }
