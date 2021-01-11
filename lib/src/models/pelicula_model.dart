@@ -68,9 +68,16 @@ class Pelicula {
   getPosterImg() {
     if (this.posterPath == null) {
       return 'https://sca.frogbikes.com/secure/img/no_image_available.jpeg';
-    } 
-    else {
+    } else {
       return 'https://image.tmdb.org/t/p/w500/$posterPath';
+    }
+  }
+
+  getBackgroundImg() {
+    if (this.posterPath == null) {
+      return 'https://sca.frogbikes.com/secure/img/no_image_available.jpeg';
+    } else {
+      return 'https://image.tmdb.org/t/p/w500/$backdropPath';
     }
   }
 }

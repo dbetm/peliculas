@@ -41,24 +41,30 @@ class MovieHorizontal extends StatelessWidget {
   }
 
   Widget _tarjeta(BuildContext context, Pelicula pelicula) {
-    return Container(
-      margin: EdgeInsets.only(right: 10.0),
-      child: Column(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: FadeInImage(
-              placeholder: AssetImage('assets/img/no-image.jpg'),
-              image: NetworkImage(pelicula.getPosterImg()),
-              fit: BoxFit.cover,
-              height: 110.0,
+    final tarjeta = Container(
+        margin: EdgeInsets.only(right: 10.0),
+        child: Column(
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: FadeInImage(
+                placeholder: AssetImage('assets/img/no-image.jpg'),
+                image: NetworkImage(pelicula.getPosterImg()),
+                fit: BoxFit.cover,
+                height: 110.0,
+              ),
             ),
-          ),
-          Text(pelicula.title,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.caption)
-        ],
-      )
+            Text(pelicula.title,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.caption)
+          ],
+        ));
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, 'detalle', arguments: pelicula);
+      },
+      child: tarjeta,
     );
   }
 
